@@ -27,14 +27,18 @@ func HelloHandler(w http.ResponseWriter, req *http.Request) {
 
 func IndexHandler(w http.ResponseWriter, req *http.Request) {
 	fmt.Println("Hit: /index")
+
+	wardList := FileRead("ward.txt")
 	index, err := template.ParseFiles("index.html") // htmlテンプレートファイル(index.html)の解析を行います。
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	getWards := New(wardList)
+
 	// 解析したhtmlテンプレートファイルを実行してレスポンスに出力
-	if err := index.Execute(w, nil); err != nil {
+	if err := index.Execute(w, getWards); err != nil {
 		log.Fatal(err)
 	}
 }
