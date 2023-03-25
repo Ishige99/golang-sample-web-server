@@ -1,4 +1,10 @@
 <h1>東京23区</h1>
+
+<form action="/create" method="post">
+    <div><input type="text" name="value"></div>
+    <div><input type="submit" name="追加"></div>
+</form>
+
 <div>
     {{ range .Wards }}
     <p>{{.}}</p>

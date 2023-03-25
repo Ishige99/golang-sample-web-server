@@ -5,6 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"os"
 )
 
 //
@@ -41,4 +42,30 @@ func IndexHandler(w http.ResponseWriter, req *http.Request) {
 	if err := index.Execute(w, getWards); err != nil {
 		log.Fatal(err)
 	}
+}
+
+//
+// 投稿用のハンドラ：区を追加します
+//
+
+func CreateWardHandler(w http.ResponseWriter, req *http.Request) {
+	if req.Method != http.MethodPost {
+		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		return
+	}
+
+	formValue := req.FormValue("value")
+	file, err := os.OpenFile("ward.txt", os.O_WRONLY|os.O_APPEND|os.O_CREATE, os.FileMode(0600))
+
+	defer file.Close()
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = fmt.Fprintln(file, formValue)
+	if err != nil {
+		log.Fatal(err)
+	}
+	http.Redirect(w, req, "/index", http.StatusFound)
 }
