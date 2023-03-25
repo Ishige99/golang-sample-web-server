@@ -38,6 +38,10 @@
 // Hello World!!
 ```
 
+### Browser
+
+[http://localhost:8080/index](http://localhost:8080/index)
+
 ## Reference
 
 - [GoでWebサーバーを構築](https://zenn.dev/satumahayato010/articles/b4a6cccbb3bb09)
